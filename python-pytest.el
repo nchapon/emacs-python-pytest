@@ -401,7 +401,7 @@ With a prefix ARG, allow editing."
       (run-hooks 'python-pytest-setup-hook)
       (make-comint-in-buffer
        "pytest" buffer
-       (if (eq system-type 'windows-nt) "cmdproxy" "sh")
+       (if (eq system-type 'windows-nt) (getenv "SHELL") "sh")
        nil "-c" command)
       (run-hooks 'python-pytest-started-hook)
       (setq process (get-buffer-process buffer))
