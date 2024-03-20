@@ -409,9 +409,13 @@ With a prefix ARG, allow editing."
 
 (defun python-pytest--shell-quote (s)
   "Quote S for use in a shell command. Like `shell-quote-argument', but prettier."
-  (if (s-equals-p s (shell-quote-argument s))
-      s
-    (format "'%s'" (s-replace "'" "'\"'\"'" s))))
+
+  (if (eq system-type 'windows-nt)
+      s ;; do nothing in windows shell
+    (if (s-equals-p s (shell-quote-argument s))
+        s
+      (format "'%s'" (s-replace "'" "'\"'\"'" s)))))
+
 
 (defun python-pytest--get-buffer ()
   "Get a create a suitable compilation buffer."
